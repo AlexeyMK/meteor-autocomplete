@@ -88,7 +88,7 @@ class @AutoComplete
     item = doc
     for part in parts
       item = item[part]
-    
+
     return item
 
   onItemClick: (doc, e) =>
@@ -104,7 +104,7 @@ class @AutoComplete
     return false unless docId # Don't select if nothing matched
 
     rule = @rules[@matched]
-    @replace rule.collection.findOne(docId)[rule.field]
+    @replace @getItemValue(rule.collection.findOne(docId))
     @hideList()
     return true
 
@@ -137,7 +137,8 @@ class @AutoComplete
     startpos = @$element.getCursorPosition()
     fullStuff = @getText()
     val = fullStuff.substring(0, startpos)
-    val = val.replace(@expressions[@matched], "$1" + @rules[@matched].token + replacement)
+    replaceWith = "$1" + (if @rules.include_token then @rules[@matched].token else "") + replacement
+    val = val.replace(@expressions[@matched], replaceWith)
     posfix = fullStuff.substring(startpos, fullStuff.length)
     separator = (if posfix.match(/^\s/) then "" else " ")
     finalFight = val + separator + posfix
