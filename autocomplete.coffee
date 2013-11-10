@@ -11,6 +11,7 @@ class @AutoComplete
   constructor: (settings) ->
     @limit = settings.limit || 5
     @position = settings.position || "bottom"
+    @onSelected = settings.onSelected || (->)
 
     @rules = settings.rules
     # Expressions compiled for range from last word break to current cursor position
@@ -153,6 +154,8 @@ class @AutoComplete
     return @$element.val() || @$element.text()
 
   setText: (text) ->
+    # picked text callback
+    @onSelected text
     if @$element.is("input,textarea")
       @$element.val(text)
     else
