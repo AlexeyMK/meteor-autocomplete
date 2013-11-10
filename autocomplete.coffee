@@ -82,8 +82,17 @@ class @AutoComplete
       @hideList()
     , 500
 
+  getItemValue: (doc) =>
+    # adds support for nested fields like "user.profile.name"
+    parts = @rules[@matched].field.split(".")
+    item = doc
+    for part in parts
+      item = item[part]
+    
+    return item
+
   onItemClick: (doc, e) =>
-    @replace doc[@rules[@matched].field]
+    @replace @getItemValue doc
     @hideList()
 
   onItemHover: (doc, e) ->
