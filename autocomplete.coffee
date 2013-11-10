@@ -155,7 +155,7 @@ class @AutoComplete
 
   setText: (text) ->
     # picked text callback
-    @onSelected text
+    @onSelected text.trim()
     if @$element.is("input,textarea")
       @$element.val(text)
     else
