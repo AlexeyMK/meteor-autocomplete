@@ -194,6 +194,6 @@ class @AutoComplete
       }
     else
       return {
-        left: position.left + offset.left
-        top: position.top + offset.top
+        left: position.left # + offset.left
+        top: position.top + offset.top + 10 # dirty one-off hack
       }
